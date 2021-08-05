@@ -1,0 +1,42 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+    My Holidays
+{% endblock %}
+
+{% block main %}
+    <form method="GET" action="/addholiday">
+        <button type"submit">Add New Holiday</button>
+    </form>
+    <form method="POST" action="/holiday">
+        Choose Existing Holiday:         
+        <SELECT name="trip_id">
+        {% for trip in trip_list %}
+        	<OPTION value={{ trip["id"] }}>{{ trip["Trip"] }}</OPTION>
+        {% endfor %}
+        </SELECT>
+        <button type"submit">View Holiday Logs</button>
+    </form>
+    
+    <h3>My Holidays</h3>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Holiday</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for holiday in holidays %}
+                    <tr>
+                        <td>{{ holiday["Trip"] }}</td>
+                        <td>{{ holiday["Start"] }}</td>
+                        <td>{{ holiday["End"] }}</td>
+                    </tr>
+                {% endfor %}
+        </table>
+   </div>
+{% endblock %}

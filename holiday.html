@@ -1,0 +1,67 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+    {% for trip in trip_list %}
+        {{ trip["name"] }}
+    {% endfor %}
+{% endblock %}
+
+{% block main %}
+    
+    {% for trip in trip_list %}
+        <h1>{{ trip["name"] }}</h1>
+        <h3>From {{ trip["start"] }} until {{ trip["end"] }}</h3>
+        <h6>{{ trip["id"] }}</h6>
+    
+        <form method="GET" action="/add_log">
+            <button class="form_button" type="submit"><i class="fas fa-plus"></i> Add New Log</button>
+            <!--Doesn't work wthout POST, however need POST for form on html 
+            <input type="hidden" id="trip_id" name="trip_id" value="{{ trip_id }}">
+            <input type="hidden" name="random" id="random" value=2>
+            -->
+            
+        </form>
+    {% endfor %}
+    <br>
+    <br>
+    
+        
+    <div class="container">
+        {% for entry in entry_list %}
+        <h1>{{ entry["Title"] }}</h1>
+        <form method="POST" action="/send">
+            <button class="form_button" onClick="return confirm_send()"><i class="fas fa-envelope"></i></button>
+            <input type="hidden" id="log_id" name="log_id" value="{{ entry["id"] }}">
+        </form>
+        
+        <form method="GET" action="/edit_log">
+            <button class="form_button"><i class="fas fa-pen"></i></button>
+            <input type="hidden" id="log_id" name="log_id" value="{{ entry["id"] }}">
+        </form>
+        
+        <form method="POST" action="/remove_log">
+            <button class="form_button" onClick="return confirm_remove()"><i class="fas fa-trash"></i></button>
+            <input type="hidden" id="log_id" name="log_id" value="{{ entry["id"] }}">
+        </form>
+        
+        
+        
+        <h4>{{ entry["Date"] }}</h4>
+        <h4>{{ entry["Location"] }}</h4>
+        <br>
+        <p>
+            {{ entry["Log"] }}
+        </p>
+        <br>
+        <br>
+        <br>
+        <p>
+            <img src={{ entry["Image"] }}>
+        </p>
+        
+        {% endfor %}
+           
+   </div>
+
+{% endblock %}
